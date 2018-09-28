@@ -5,28 +5,6 @@ class Cell {
     this.populated = populated;
   }
 
-  is_populated_in_next_generation() {
-    const n = this.number_of_populated_neighbors()
-
-    if (n == 3) {
-      return true;
-    } else if (n == 2 && this.populated) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  number_of_populated_neighbors() {
-    return this.neighbors().reduce((acc, neighbor) => {
-      if (neighbor && neighbor.populated) {
-        return acc + 1;
-      } else {
-        return acc
-      }
-    }, 0);
-  }
-
   neighbors() {
     const a = this.coordinates[0]
     const b = this.coordinates[1]
@@ -42,6 +20,7 @@ class Cell {
     ]);
   }
 
+}
 
 
 //  Any live cell with fewer than two live neighbors dies, as if by under population.
@@ -55,6 +34,5 @@ class Cell {
 // the inner field retains its current state;
 // and every other sum sets the inner field to death.
 
-}
 
 module.exports = Cell;

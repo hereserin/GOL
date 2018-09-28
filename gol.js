@@ -3,14 +3,14 @@ const Game = require('./game');
 const Cell = require('./cell');
 const CanvasGrid = require('./canvas_grid');
 
-
+// TODO: change all SNAKECASE to CAMELCASE !!!
 
 document.addEventListener("DOMContentLoaded", function(){
 // will delete this code
-  let grid_a = new Grid();
-  let grid_b = new Grid();
-  let game = new Game();
-  let new_cell = new Cell();
+  // let gridA = new Grid();
+  // let gridB = new Grid();
+
+  // let newCell = new Cell();
 
   // debugger
   // grid_a.generate_next_gen_grid();
@@ -27,14 +27,9 @@ document.addEventListener("DOMContentLoaded", function(){
   const canvasEl = document.getElementById("mycanvas");
   let canvasInstance = new CanvasGrid(canvasEl);
   canvasInstance.buildGrid();
+  let game = new Game(canvasInstance);
+  game.play();
 
-  window.fillSquare = canvasInstance.fillSquare;
 
-  // console.log(cols);
-  // console.log(rows + 4);
-  // console.log("test");
-  //
-  // console.log(grid_a);
-  // console.log(game);
 
 });

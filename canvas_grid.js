@@ -2,8 +2,10 @@
 class CanvasGrid {
   constructor(canvasEl) {
     this.canvasEl = canvasEl;
-    this.ctx = this.canvasEl.getContext("2d")
-    this.fillSquare = this.fillSquare.bind(this)
+    this.ctx = this.canvasEl.getContext("2d");
+    this.fillSquare = this.fillSquare.bind(this);
+    this.birthCell = this.birthCell.bind(this);
+    this.killCell = this.killCell.bind(this);
   }
 
   buildGrid() {
@@ -27,13 +29,33 @@ class CanvasGrid {
     }
   }
 
-  fillSquare(coords) {
-    console.log(this);
-    console.log(this.ctx);
+  acceptArray(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      for (var j = 0; j < arr[i].length; j++) {
+        if ( arr[i][j] ) {
+          this.birthCell([i,j]);
+        } else {
+          this.killCell([i,j]);
+        }
+      }
+    }
+  }
+
+  fillSquare(coords, color) {
     const squareArea = this.convertCoords(coords);
-    this.ctx.fillStyle = 'yellow';
+    this.ctx.fillStyle = color;
     this.ctx.fillRect(squareArea[0], squareArea[1], 8, 8);
   }
+
+  birthCell(coords) {
+    this.fillSquare(coords, 'yellow');
+  }
+
+  killCell(coords) {
+    this.fillSquare(coords, 'black');
+  }
+
+
 
   convertCoords(coords) {
     let x = coords[0];

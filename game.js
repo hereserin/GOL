@@ -2,31 +2,41 @@ const Grid = require('./grid');
 const Cell = require('./cell.js');
 
 class Game {
-  constructor() {
+  constructor(canvasGrid) {
     // debugger
-    this.current_grid = new Grid();
-    this.next_gen_grid = undefined;
-    this.canvasGrid = 0;
+    this.currentGrid = new Grid();
+    this.currentGrid.testInitialPopulate();
+    this.nextGenGrid = this.currentGrid.nextGenGrid();
+    this.canvasGrid = canvasGrid;
+    this.stepGeneration = this.stepGeneration.bind(this);
+    this.renderGridToCanvas = this.renderGridToCanvas.bind(this);
   }
 
   play() {
-    [1,2,3,4,5].forEach((i) => {
-      this.step_generation()
-    });
+      let j = 0;
+      let gameInt = setInterval(() => {
+        this.stepGeneration();
+        this.renderGridToCanvas();
+        j++;
+
+        if ( j > 5 ) {
+          clearInterval(gameInt);
+        }
+
+        console.log(j);
+      }, 1000);
+
   }
 
-  step_generation() {
-    this.current_grid = this.next_gen_grid;
-    this.generate_next_gen_grid();
+  stepGeneration() {
+    this.currentGrid = this.nextGenGrid;
+    this.nextGenGrid = this.currentGrid.nextGenGrid();
   }
 
-  generate_next_gen_grid() {
-    // debugger
-    this.next_gen_grid = this.current_grid.generate_next_gen_grid();
-    this.current_grid = new Grid();
-    let okay = 0;
-  }
 
+  renderGridToCanvas() {
+    this.canvasGrid.acceptArray(this.currentGrid.provideArray());
+  }
 }
 
 

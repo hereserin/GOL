@@ -97,8 +97,10 @@
 class CanvasGrid {
   constructor(canvasEl) {
     this.canvasEl = canvasEl;
-    this.ctx = this.canvasEl.getContext("2d")
-    this.fillSquare = this.fillSquare.bind(this)
+    this.ctx = this.canvasEl.getContext("2d");
+    this.fillSquare = this.fillSquare.bind(this);
+    this.birthCell = this.birthCell.bind(this);
+    this.killCell = this.killCell.bind(this);
   }
 
   buildGrid() {
@@ -122,13 +124,33 @@ class CanvasGrid {
     }
   }
 
-  fillSquare(coords) {
-    console.log(this);
-    console.log(this.ctx);
+  acceptArray(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      for (var j = 0; j < arr[i].length; j++) {
+        if ( arr[i][j] ) {
+          this.birthCell([i,j]);
+        } else {
+          this.killCell([i,j]);
+        }
+      }
+    }
+  }
+
+  fillSquare(coords, color) {
     const squareArea = this.convertCoords(coords);
-    this.ctx.fillStyle = 'yellow';
+    this.ctx.fillStyle = color;
     this.ctx.fillRect(squareArea[0], squareArea[1], 8, 8);
   }
+
+  birthCell(coords) {
+    this.fillSquare(coords, 'yellow');
+  }
+
+  killCell(coords) {
+    this.fillSquare(coords, 'black');
+  }
+
+
 
   convertCoords(coords) {
     let x = coords[0];
@@ -159,28 +181,6 @@ class Cell {
     this.populated = populated;
   }
 
-  is_populated_in_next_generation() {
-    const n = this.number_of_populated_neighbors()
-
-    if (n == 3) {
-      return true;
-    } else if (n == 2 && this.populated) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  number_of_populated_neighbors() {
-    return this.neighbors().reduce((acc, neighbor) => {
-      if (neighbor && neighbor.populated) {
-        return acc + 1;
-      } else {
-        return acc
-      }
-    }, 0);
-  }
-
   neighbors() {
     const a = this.coordinates[0]
     const b = this.coordinates[1]
@@ -196,6 +196,7 @@ class Cell {
     ]);
   }
 
+}
 
 
 //  Any live cell with fewer than two live neighbors dies, as if by under population.
@@ -209,7 +210,6 @@ class Cell {
 // the inner field retains its current state;
 // and every other sum sets the inner field to death.
 
-}
 
 module.exports = Cell;
 
@@ -227,31 +227,41 @@ const Grid = __webpack_require__(/*! ./grid */ "./grid.js");
 const Cell = __webpack_require__(/*! ./cell.js */ "./cell.js");
 
 class Game {
-  constructor() {
+  constructor(canvasGrid) {
     // debugger
-    this.current_grid = new Grid();
-    this.next_gen_grid = undefined;
-    this.canvasGrid = 0;
+    this.currentGrid = new Grid();
+    this.currentGrid.testInitialPopulate();
+    this.nextGenGrid = this.currentGrid.nextGenGrid();
+    this.canvasGrid = canvasGrid;
+    this.stepGeneration = this.stepGeneration.bind(this);
+    this.renderGridToCanvas = this.renderGridToCanvas.bind(this);
   }
 
   play() {
-    [1,2,3,4,5].forEach((i) => {
-      this.step_generation()
-    });
+      let j = 0;
+      let gameInt = setInterval(() => {
+        this.stepGeneration();
+        this.renderGridToCanvas();
+        j++;
+
+        if ( j > 5 ) {
+          clearInterval(gameInt);
+        }
+
+        console.log(j);
+      }, 1000);
+
   }
 
-  step_generation() {
-    this.current_grid = this.next_gen_grid;
-    this.generate_next_gen_grid();
+  stepGeneration() {
+    this.currentGrid = this.nextGenGrid;
+    this.nextGenGrid = this.currentGrid.nextGenGrid();
   }
 
-  generate_next_gen_grid() {
-    // debugger
-    this.next_gen_grid = this.current_grid.generate_next_gen_grid();
-    this.current_grid = new Grid();
-    let okay = 0;
-  }
 
+  renderGridToCanvas() {
+    this.canvasGrid.acceptArray(this.currentGrid.provideArray());
+  }
 }
 
 
@@ -272,14 +282,14 @@ const Game = __webpack_require__(/*! ./game */ "./game.js");
 const Cell = __webpack_require__(/*! ./cell */ "./cell.js");
 const CanvasGrid = __webpack_require__(/*! ./canvas_grid */ "./canvas_grid.js");
 
-
+// TODO: change all SNAKECASE to CAMELCASE !!!
 
 document.addEventListener("DOMContentLoaded", function(){
 // will delete this code
-  let grid_a = new Grid();
-  let grid_b = new Grid();
-  let game = new Game();
-  let new_cell = new Cell();
+  // let gridA = new Grid();
+  // let gridB = new Grid();
+
+  // let newCell = new Cell();
 
   // debugger
   // grid_a.generate_next_gen_grid();
@@ -296,15 +306,10 @@ document.addEventListener("DOMContentLoaded", function(){
   const canvasEl = document.getElementById("mycanvas");
   let canvasInstance = new CanvasGrid(canvasEl);
   canvasInstance.buildGrid();
+  let game = new Game(canvasInstance);
+  game.play();
 
-  window.fillSquare = canvasInstance.fillSquare;
 
-  // console.log(cols);
-  // console.log(rows + 4);
-  // console.log("test");
-  //
-  // console.log(grid_a);
-  // console.log(game);
 
 });
 
@@ -324,8 +329,12 @@ const Cell = __webpack_require__(/*! ./cell.js */ "./cell.js");
 
 class Grid {
   constructor(a=60, b=99 ) {
-    this.grid = [];
+    // this.grid = [];
     this.grid = this.create_grid(a,b);
+    this.acceptArray = this.acceptArray.bind(this);
+    this.provideArray = this.provideArray.bind(this);
+    this.nextGenGrid = this.nextGenGrid.bind(this);
+    this.testInitialPopulate = this.testInitialPopulate.bind(this);
   }
 
   create_grid(a,b) {
@@ -334,35 +343,102 @@ class Grid {
       let new_row = [];
       for (var j = 0; j < b; j++) {
 
-        let new_cell = new Cell(i, j, this.should_be_populated(i,j));
+        let new_cell = new Cell(i, j, this.shouldBePopulated(i,j));
         new_row.push(new_cell);
       }
       output_grid.push(new_row);
     }
+    // output_grid[10][5].populateCell();
+    // output_grid[12][5].populateCell();
     return output_grid;
   }
 
-  should_be_populated(n, m) {
+  testInitialPopulate() {
+    this.grid[10][5].populated = true;
+    this.grid[12][5].populated = true;
+    this.grid[11][4].populated = true;
+    this.grid[12][3].populated = true;
+
+    this.grid[2][3].populated = true;
+    this.grid[4][3].populated = true;
+    this.grid[3][2].populated = true;
+    this.grid[4][1].populated = true;
+
+    this.grid[20][5].populated = true;
+    this.grid[21][5].populated = true;
+    this.grid[22][5].populated = true;
+
+
+
+  }
+
+  shouldBePopulated(n, m) {
     return false;
   }
 
-  accept_array(arr) {
+  acceptArray(arr) {
     this.grid = arr;
   }
 
-  generate_next_gen_grid() {
+  provideArray() {
+    return this.grid.map((row) => {
+      return row.map((cell) => {
+        return cell.populated;
+      });
+    });
+  }
+
+  nextGenGrid() {
     let next_gen_grid = new this.constructor(this.grid.length, this.grid[0].length);
     let next_gen_arr = this.grid.map((row)=>{
       return row.map((each_cell=>{
-        let populate = each_cell.is_populated_in_next_generation();
+        // debugger
+        let populate = this.cellIsPopulatedInNextGeneration(each_cell);
         let coords = each_cell.coordinates;
         let next_gen = new Cell(coords[0], coords[1], populate);
         return next_gen;
       }));
     });
-    next_gen_grid.accept_array(next_gen_arr);
-    return next_gen_arr;
+    next_gen_grid.acceptArray(next_gen_arr);
+    return next_gen_grid;
   }
+
+// *****
+  cellIsPopulatedInNextGeneration(cell) {
+    const n = this.numberOfPopulatedNeighbors(cell)
+
+    if (n == 3) {
+      return true;
+    } else if (n == 2 && cell.populated) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  numberOfPopulatedNeighbors(cell) {
+    // console.log(cell.coordinates)
+    // debugger
+    return cell.neighbors().reduce((acc, neighbor) => {
+      // debugger
+      // console.log(neighbor);
+      if (this.coordsAreInGrid(neighbor) && this.grid[neighbor[0]][neighbor[1]].populated) {
+        return acc + 1;
+      } else {
+        return acc;
+      }
+    }, 0);
+  }
+
+  coordsAreInGrid(coordsArr) {
+    if (coordsArr[0] < this.grid.length && coordsArr[0] > -1) {
+      if (coordsArr[1] < this.grid[0].length && coordsArr[1] > -1) {
+        return true;
+      }
+    }
+      return false;
+  }
+  // ******
 
 }
 
