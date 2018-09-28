@@ -8,23 +8,25 @@ class Game {
     this.currentGrid.testInitialPopulate();
     this.nextGenGrid = this.currentGrid.nextGenGrid();
     this.canvasGrid = canvasGrid;
+    this.canvasGrid.game = this;
     this.stepGeneration = this.stepGeneration.bind(this);
     this.renderGridToCanvas = this.renderGridToCanvas.bind(this);
   }
 
   play() {
+      // debugger
       let j = 0;
       let gameInt = setInterval(() => {
         this.stepGeneration();
         this.renderGridToCanvas();
         j++;
 
-        if ( j > 5 ) {
+        if ( j > 2 ) {
           clearInterval(gameInt);
         }
 
         console.log(j);
-      }, 1000);
+      }, 500);
 
   }
 

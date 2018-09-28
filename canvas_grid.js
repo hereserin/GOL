@@ -2,10 +2,14 @@
 class CanvasGrid {
   constructor(canvasEl) {
     this.canvasEl = canvasEl;
+    this.game = undefined;
     this.ctx = this.canvasEl.getContext("2d");
+    this.respondToClick = this.respondToClick.bind(this);
+    this.canvasEl.addEventListener('click', this.respondToClick);
     this.fillSquare = this.fillSquare.bind(this);
     this.birthCell = this.birthCell.bind(this);
     this.killCell = this.killCell.bind(this);
+    this.dimenInBoxes = undefined;
   }
 
   buildGrid() {
@@ -27,6 +31,7 @@ class CanvasGrid {
       }
       rows = j;
     }
+    this.dimenInBoxes = [i,j];
   }
 
   acceptArray(arr) {
@@ -55,7 +60,9 @@ class CanvasGrid {
     this.fillSquare(coords, 'black');
   }
 
+  toggleSquare(coords) {
 
+  }
 
   convertCoords(coords) {
     let x = coords[0];
@@ -64,6 +71,34 @@ class CanvasGrid {
     let y_loc = 1 + ( y * 10 );
     return [x_loc, y_loc];
   }
+
+  clickLocToBoxCoords() {
+
+  }
+
+  respondToClick(e) {
+    // console.log(this);
+    // const clickLocation = this.getMousePos(e);
+    // console.log(clockLocation);
+
+    const area = this.canvasEl.getBoundingClientRect();
+    // debugger
+    const clickLocation = {
+      x: e.screenX - area.left,
+      y: e.screenY - area.top
+    };
+
+    let a = Math.floor(clickLocation.x/10);
+    let b = Math.floor(clickLocation.y/10);
+    let boxCoord = [a, b];
+    this.birthCell(boxCoord);
+
+    console.log(clickLocation);
+    debugger
+    let d = "hi";
+
+  }
+
 
 }
 
