@@ -1,3 +1,4 @@
+
 class Cell {
   constructor(a, b, populated=false) {
     this.coordinates = [a,b]
@@ -54,7 +55,6 @@ class Cell {
 // the inner field retains its current state;
 // and every other sum sets the inner field to death.
 
-};
+}
 
-// module.exports = Cell;
-export default Cell;
+module.exports = Cell;

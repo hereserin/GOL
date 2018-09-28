@@ -1,0 +1,21 @@
+
+
+.main-area {
+  display: flex;
+}
+
+.left-aside {
+  background-color: blue;
+}
+
+.right-aside {
+  background-color: blue;
+}
+
+.canvas-grid {
+  margin: 20px;
+}
+
+.top-part {
+  background-color: green;
+}

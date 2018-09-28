@@ -1,6 +1,6 @@
 
 module.exports = {
-  entry: "./random.js",
+  entry: "./gol.js",
   output: {
   	filename: "./bundle.js"
   },
