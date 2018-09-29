@@ -15,13 +15,14 @@ class Game {
 
   play() {
       // debugger
+      this.renderGridToCanvas();
       let j = 0;
       let gameInt = setInterval(() => {
         this.stepGeneration();
         this.renderGridToCanvas();
         j++;
 
-        if ( j > 2 ) {
+        if ( j > 5 ) {
           clearInterval(gameInt);
         }
 

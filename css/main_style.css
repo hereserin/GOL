@@ -16,11 +16,20 @@ ol, ul {
   list-style: none;
 }
 
+h1 {
+
+  padding-top: 15px;
+  font-size: 55px;
+  color: #17f0d4;
+  font-family: 'Luckiest Guy', cursive;
+}
+
 
 .main-area {
   background-color: #37233a;
   margin: 0 auto;
   width: 1200px;
+  box-shadow: 10px 10px 8px #070707;
 }
 
 .middle-area {
@@ -43,10 +52,17 @@ ol, ul {
 
 .canvas-grid {
   margin: 20px;
+
 }
 
 .top-part {
   background-color: #0c5d56b3;
+  height: 100px;
+  text-align: center;
+}
+
+.control-panel {
+  background-color: #0c5d56;
   height: 100px;
 }
 

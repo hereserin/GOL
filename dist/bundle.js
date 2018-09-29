@@ -275,13 +275,14 @@ class Game {
 
   play() {
       // debugger
+      this.renderGridToCanvas();
       let j = 0;
       let gameInt = setInterval(() => {
         this.stepGeneration();
         this.renderGridToCanvas();
         j++;
 
-        if ( j > 2 ) {
+        if ( j > 5 ) {
           clearInterval(gameInt);
         }
 
@@ -391,20 +392,39 @@ class Grid {
   }
 
   testInitialPopulate() {
-    this.grid[10][5].populated = true;
-    this.grid[12][5].populated = true;
-    this.grid[11][4].populated = true;
-    this.grid[12][3].populated = true;
+  // TEST NO 1 *******
+    // this.grid[10][5].populated = true;
+    // this.grid[12][5].populated = true;
+    // this.grid[11][4].populated = true;
+    // this.grid[12][3].populated = true;
+    //
+    // this.grid[2][3].populated = true;
+    // this.grid[4][3].populated = true;
+    // this.grid[3][2].populated = true;
+    // this.grid[4][1].populated = true;
+    //
+    // this.grid[20][5].populated = true;
+    // this.grid[21][5].populated = true;
+    // this.grid[22][5].populated = true;
+  // ******
 
-    this.grid[2][3].populated = true;
-    this.grid[4][3].populated = true;
-    this.grid[3][2].populated = true;
-    this.grid[4][1].populated = true;
+  // TEST NO 2 - USE THIS AS A FINAL TEMPLATE *******
+    this.grid[18][12].populated = true;
 
-    this.grid[20][5].populated = true;
-    this.grid[21][5].populated = true;
-    this.grid[22][5].populated = true;
+    this.grid[16][13].populated = true;
+    this.grid[18][13].populated = true;
+    this.grid[19][13].populated = true;
 
+    this.grid[16][14].populated = true;
+    this.grid[18][14].populated = true;
+
+    this.grid[16][15].populated = true;
+
+    this.grid[14][16].populated = true;
+
+    this.grid[12][17].populated = true;
+    this.grid[14][17].populated = true;
+  // *******
 
 
   }
