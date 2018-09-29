@@ -9,6 +9,7 @@ html, body, div, span, h1, h2, h3, h4, a, ol, ul, li, form, label, article, asid
 
 body {
   line-height: 1.5;
+  background-color: #37233a;
 }
 
 ol, ul {
@@ -17,7 +18,9 @@ ol, ul {
 
 
 .main-area {
-  background-color: blue;
+  background-color: #37233a;
+  margin: 0 auto;
+  width: 1200px;
 }
 
 .middle-area {
@@ -29,11 +32,13 @@ ol, ul {
 } */
 
 .left-aside {
-  background-color: red;
+  background-color: #0c5d56;
+  width: 500px;
 }
 
 .right-aside {
-  background-color: red;
+  background-color: #0c5d56;
+  width: 500px;
 }
 
 .canvas-grid {
@@ -41,5 +46,11 @@ ol, ul {
 }
 
 .top-part {
-  background-color: green;
+  background-color: #0c5d56b3;
+  height: 100px;
+}
+
+.footer {
+  background-color: #0c5d56b3;
+  height: 300px;
 }

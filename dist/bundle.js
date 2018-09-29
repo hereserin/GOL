@@ -108,17 +108,17 @@ class CanvasGrid {
   }
 
   buildGrid() {
-    this.canvasEl.width = 1000;
-    this.canvasEl.height = 600;
+    this.canvasEl.width = 800;
+    this.canvasEl.height = 400;
 
     // const ctx = this.canvasEl.getContext("2d");
     this.ctx.fillStyle = "purple";
-    this.ctx.fillRect(0, 0, 1000, 600);
+    this.ctx.fillRect(0, 0, 800, 400);
     let cols
     let rows
     this.ctx.fillStyle = "black";
-    for (var i = 0; i < 100; i++) {
-      for (var j = 0; j < 60; j++) {
+    for (var i = 0; i < 80; i++) {
+      for (var j = 0; j < 40; j++) {
         let x = 1 + ( i * 10 );
         let y = 1 + ( j * 10 );
         this.ctx.fillRect(x, y, 8, 8);
