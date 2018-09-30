@@ -77,26 +77,17 @@ class CanvasGrid {
   }
 
   respondToClick(e) {
-    // console.log(this);
-    // const clickLocation = this.getMousePos(e);
-    // console.log(clockLocation);
-
     const area = this.canvasEl.getBoundingClientRect();
-    // debugger
+
     const clickLocation = {
-      x: e.screenX - area.left,
-      y: e.screenY - area.top
+      x: e.pageX - this.canvasEl.offsetLeft,
+      y: e.pageY - this.canvasEl.offsetTop
     };
 
     let a = Math.floor(clickLocation.x/10);
     let b = Math.floor(clickLocation.y/10);
     let boxCoord = [a, b];
     this.birthCell(boxCoord);
-
-    console.log(clickLocation);
-    debugger
-    let d = "hi";
-
   }
 
 
