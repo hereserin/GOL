@@ -3,8 +3,7 @@ const Cell = require("./cell.js");
 
 
 class Grid {
-  constructor(a=60, b=99 ) {
-    // this.grid = [];
+  constructor(a=80, b=40 ) {
     this.grid = this.create_grid(a,b);
     this.acceptArray = this.acceptArray.bind(this);
     this.provideArray = this.provideArray.bind(this);

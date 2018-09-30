@@ -10,6 +10,7 @@ class Game {
     this.nextGenGrid = this.currentGrid.nextGenGrid();
 
     this.controlButtons = controlButtons;
+    this.stop = true;
     this.setupButtons();
     this.canvasGrid = canvasGrid;
     this.canvasGrid.attachToGame(this);
@@ -28,9 +29,9 @@ class Game {
   attachButtonToMethod(butnArr) {
     const that = this;
     const methodChooser = {
-      startButton: that.play,
-      stopButton: that.play,
-      resetButton: that.play
+      startButton: that.startButtonMethod,
+      stopButton: that.stopButtonMethod,
+      resetButton: that.resetButtonMethod
     };
 
     butnArr[1].addEventListener('click', (e) => {
@@ -58,6 +59,33 @@ class Game {
         console.log("outside loop");
       }, 500);
         console.log("outside of set interval situation");
+  }
+
+  startButtonMethod() {
+      // debugger
+      this.stop = false;
+      this.renderGridToCanvas();
+      let gameInt = setInterval(() => {
+        this.stepGeneration();
+        this.renderGridToCanvas();
+
+        console.log("before loop");
+        if ( this.stop ) {
+          clearInterval(gameInt);
+          console.log("inside loop")
+        }
+
+        console.log("outside loop");
+      }, 500);
+        console.log("outside of set interval situation");
+  }
+
+  stopButtonMethod() {
+    this.stop = true;
+  }
+
+  resetButtonMethod() {
+
   }
 
   stepGeneration() {
