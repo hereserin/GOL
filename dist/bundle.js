@@ -112,7 +112,7 @@ class CanvasGrid {
     this.canvasEl.height = 400;
 
     // const ctx = this.canvasEl.getContext("2d");
-    this.ctx.fillStyle = "purple";
+    this.ctx.fillStyle = "#37233a";
     this.ctx.fillRect(0, 0, 800, 400);
     let cols
     let rows
@@ -253,16 +253,45 @@ const Grid = __webpack_require__(/*! ./grid */ "./grid.js");
 const Cell = __webpack_require__(/*! ./cell.js */ "./cell.js");
 
 class Game {
-  constructor(canvasGrid) {
+  constructor(canvasGrid, controlButtons) {
     // debugger
     this.currentGrid = new Grid();
+
     this.currentGrid.testInitialPopulate();
     this.nextGenGrid = this.currentGrid.nextGenGrid();
+
+    this.controlButtons = controlButtons;
+    this.setupButtons();
     this.canvasGrid = canvasGrid;
-    this.canvasGrid.game = this;
+
+    // this.canvasGrid.game = this;
     this.stepGeneration = this.stepGeneration.bind(this);
     this.renderGridToCanvas = this.renderGridToCanvas.bind(this);
   }
+
+  setupButtons() {
+    Object.entries(this.controlButtons).forEach((buttonArr) => {
+      // debugger
+      return this.attachButtonToMethod(buttonArr);
+    });
+  }
+
+  attachButtonToMethod(butnArr) {
+    const that = this;
+    const methodChooser = {
+      startButton: that.play,
+      stopButton: that.play,
+      resetButton: that.play
+    }
+
+    butnArr[1].addEventListener('click', (e) => {
+      // debugger
+      // return methodChooser['${butnArr[0]}']();
+      return methodChooser[butnArr[0]].apply(that);
+    });
+  }
+
+
 
   play() {
       // debugger
@@ -273,13 +302,15 @@ class Game {
         this.renderGridToCanvas();
         j++;
 
+        console.log("before loop");
         if ( j > 5 ) {
           clearInterval(gameInt);
+          console.log("inside loop")
         }
 
-        console.log(j);
+        console.log("outside loop");
       }, 500);
-
+        console.log("outside of set interval situation");
   }
 
   stepGeneration() {
@@ -314,30 +345,28 @@ const CanvasGrid = __webpack_require__(/*! ./canvas_grid */ "./canvas_grid.js");
 // TODO: change all SNAKECASE to CAMELCASE !!!
 
 document.addEventListener("DOMContentLoaded", function(){
-// will delete this code
-  // let gridA = new Grid();
-  // let gridB = new Grid();
-
-  // let newCell = new Cell();
-
-  // debugger
-  // grid_a.generate_next_gen_grid();
-  // console.log(grid_a.next_gen_grid);
-  // game.step_generation();
-  // console.log(game.next_gen_grid);
-  // will delete this code
-
   // grab canvas
   // pass it to canvasGrid class
   // pass that canvasGrid to new instance of game
   // call play on the game
 
+
+  // grab buttons
+  // pass buttons to game class
+
+  const controlButtons = {
+    startButton: document.getElementById("start"),
+    stopButton: document.getElementById("stop"),
+    resetButton: document.getElementById("reset")
+ }
+
   const canvasEl = document.getElementById("mycanvas");
   let canvasInstance = new CanvasGrid(canvasEl);
   canvasInstance.buildGrid();
-  let game = new Game(canvasInstance);
+  let game = new Game(canvasInstance, controlButtons);
   game.play();
-
+  // debugger
+  // let hi = "hi";
 
 
 });

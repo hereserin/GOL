@@ -17,7 +17,7 @@ class CanvasGrid {
     this.canvasEl.height = 400;
 
     // const ctx = this.canvasEl.getContext("2d");
-    this.ctx.fillStyle = "purple";
+    this.ctx.fillStyle = "#37233a";
     this.ctx.fillRect(0, 0, 800, 400);
     let cols
     let rows

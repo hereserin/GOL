@@ -17,11 +17,20 @@ ol, ul {
 }
 
 h1 {
-
   padding-top: 15px;
   font-size: 55px;
   color: #17f0d4;
   font-family: 'Luckiest Guy', cursive;
+}
+
+button {
+  margin: 30px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: #17f0d4;
+  border-color: #17f0d4;
+  color: #37233a;
 }
 
 
@@ -63,7 +72,12 @@ h1 {
 
 .control-panel {
   background-color: #0c5d56;
-  height: 100px;
+  height: 150px;
+}
+
+.control-panel ul {
+  display: flex;
+  justify-content: center;
 }
 
 .footer {
