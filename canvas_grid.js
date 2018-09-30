@@ -10,6 +10,11 @@ class CanvasGrid {
     this.birthCell = this.birthCell.bind(this);
     this.killCell = this.killCell.bind(this);
     this.dimenInBoxes = undefined;
+    this.game = undefined;
+  }
+
+  attachToGame(game) {
+    this.game = game;
   }
 
   buildGrid() {
@@ -60,20 +65,12 @@ class CanvasGrid {
     this.fillSquare(coords, 'black');
   }
 
-  toggleSquare(coords) {
-
-  }
-
   convertCoords(coords) {
     let x = coords[0];
     let y = coords[1];
     let x_loc = 1 + ( x * 10 );
     let y_loc = 1 + ( y * 10 );
     return [x_loc, y_loc];
-  }
-
-  clickLocToBoxCoords() {
-
   }
 
   respondToClick(e) {
@@ -87,7 +84,17 @@ class CanvasGrid {
     let a = Math.floor(clickLocation.x/10);
     let b = Math.floor(clickLocation.y/10);
     let boxCoord = [a, b];
-    this.birthCell(boxCoord);
+    // this.birthCell(boxCoord);
+    this.toggleOnClick(boxCoord);
+  }
+
+  toggleOnClick(coords) {
+    const wasPopulated = this.game.passUserInputToGrid(coords);
+    if (wasPopulated) {
+      this.killCell(coords);
+    } else {
+      this.birthCell(coords);
+    }
   }
 
 

@@ -12,6 +12,7 @@ class Game {
     this.controlButtons = controlButtons;
     this.setupButtons();
     this.canvasGrid = canvasGrid;
+    this.canvasGrid.attachToGame(this);
 
     // this.canvasGrid.game = this;
     this.stepGeneration = this.stepGeneration.bind(this);
@@ -20,7 +21,6 @@ class Game {
 
   setupButtons() {
     Object.entries(this.controlButtons).forEach((buttonArr) => {
-      // debugger
       return this.attachButtonToMethod(buttonArr);
     });
   }
@@ -31,11 +31,9 @@ class Game {
       startButton: that.play,
       stopButton: that.play,
       resetButton: that.play
-    }
+    };
 
     butnArr[1].addEventListener('click', (e) => {
-      // debugger
-      // return methodChooser['${butnArr[0]}']();
       return methodChooser[butnArr[0]].apply(that);
     });
   }
@@ -63,14 +61,21 @@ class Game {
   }
 
   stepGeneration() {
-    this.currentGrid = this.nextGenGrid;
     this.nextGenGrid = this.currentGrid.nextGenGrid();
+    this.currentGrid = this.nextGenGrid;
+    // this.nextGenGrid = this.currentGrid.nextGenGrid();
   }
 
 
   renderGridToCanvas() {
     this.canvasGrid.acceptArray(this.currentGrid.provideArray());
   }
+
+  passUserInputToGrid(coords){
+    const wasPopulated = this.currentGrid.acceptUserInput(coords);
+  }
+
+
 }
 
 

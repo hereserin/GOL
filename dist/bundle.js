@@ -105,6 +105,11 @@ class CanvasGrid {
     this.birthCell = this.birthCell.bind(this);
     this.killCell = this.killCell.bind(this);
     this.dimenInBoxes = undefined;
+    this.game = undefined;
+  }
+
+  attachToGame(game) {
+    this.game = game;
   }
 
   buildGrid() {
@@ -155,20 +160,12 @@ class CanvasGrid {
     this.fillSquare(coords, 'black');
   }
 
-  toggleSquare(coords) {
-
-  }
-
   convertCoords(coords) {
     let x = coords[0];
     let y = coords[1];
     let x_loc = 1 + ( x * 10 );
     let y_loc = 1 + ( y * 10 );
     return [x_loc, y_loc];
-  }
-
-  clickLocToBoxCoords() {
-
   }
 
   respondToClick(e) {
@@ -182,7 +179,17 @@ class CanvasGrid {
     let a = Math.floor(clickLocation.x/10);
     let b = Math.floor(clickLocation.y/10);
     let boxCoord = [a, b];
-    this.birthCell(boxCoord);
+    // this.birthCell(boxCoord);
+    this.toggleOnClick(boxCoord);
+  }
+
+  toggleOnClick(coords) {
+    const wasPopulated = this.game.passUserInputToGrid(coords);
+    if (wasPopulated) {
+      this.killCell(coords);
+    } else {
+      this.birthCell(coords);
+    }
   }
 
 
@@ -263,6 +270,7 @@ class Game {
     this.controlButtons = controlButtons;
     this.setupButtons();
     this.canvasGrid = canvasGrid;
+    this.canvasGrid.attachToGame(this);
 
     // this.canvasGrid.game = this;
     this.stepGeneration = this.stepGeneration.bind(this);
@@ -271,7 +279,6 @@ class Game {
 
   setupButtons() {
     Object.entries(this.controlButtons).forEach((buttonArr) => {
-      // debugger
       return this.attachButtonToMethod(buttonArr);
     });
   }
@@ -282,11 +289,9 @@ class Game {
       startButton: that.play,
       stopButton: that.play,
       resetButton: that.play
-    }
+    };
 
     butnArr[1].addEventListener('click', (e) => {
-      // debugger
-      // return methodChooser['${butnArr[0]}']();
       return methodChooser[butnArr[0]].apply(that);
     });
   }
@@ -314,14 +319,21 @@ class Game {
   }
 
   stepGeneration() {
-    this.currentGrid = this.nextGenGrid;
     this.nextGenGrid = this.currentGrid.nextGenGrid();
+    this.currentGrid = this.nextGenGrid;
+    // this.nextGenGrid = this.currentGrid.nextGenGrid();
   }
 
 
   renderGridToCanvas() {
     this.canvasGrid.acceptArray(this.currentGrid.provideArray());
   }
+
+  passUserInputToGrid(coords){
+    const wasPopulated = this.currentGrid.acceptUserInput(coords);
+  }
+
+
 }
 
 
@@ -463,6 +475,14 @@ class Grid {
         return cell.populated;
       });
     });
+  }
+
+  acceptUserInput(coords) {
+    const x = coords[0];
+    const y = coords[1];
+    const wasPopulated = this.grid[x][y].populated;
+    this.grid[x][y].populated = !(this.grid[x][y].populated);
+    return wasPopulated;
   }
 
   nextGenGrid() {

@@ -82,6 +82,14 @@ class Grid {
     });
   }
 
+  acceptUserInput(coords) {
+    const x = coords[0];
+    const y = coords[1];
+    const wasPopulated = this.grid[x][y].populated;
+    this.grid[x][y].populated = !(this.grid[x][y].populated);
+    return wasPopulated;
+  }
+
   nextGenGrid() {
     let next_gen_grid = new this.constructor(this.grid.length, this.grid[0].length);
     let next_gen_arr = this.grid.map((row)=>{
