@@ -62,22 +62,16 @@ class Game {
   }
 
   startButtonMethod() {
-      // debugger
       this.stop = false;
       this.renderGridToCanvas();
       let gameInt = setInterval(() => {
         this.stepGeneration();
         this.renderGridToCanvas();
 
-        console.log("before loop");
         if ( this.stop ) {
           clearInterval(gameInt);
-          console.log("inside loop")
         }
-
-        console.log("outside loop");
       }, 500);
-        console.log("outside of set interval situation");
   }
 
   stopButtonMethod() {
@@ -85,7 +79,8 @@ class Game {
   }
 
   resetButtonMethod() {
-
+    this.currentGrid.reset();
+    this.renderGridToCanvas();
   }
 
   stepGeneration() {

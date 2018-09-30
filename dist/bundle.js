@@ -320,22 +320,16 @@ class Game {
   }
 
   startButtonMethod() {
-      // debugger
       this.stop = false;
       this.renderGridToCanvas();
       let gameInt = setInterval(() => {
         this.stepGeneration();
         this.renderGridToCanvas();
 
-        console.log("before loop");
         if ( this.stop ) {
           clearInterval(gameInt);
-          console.log("inside loop")
         }
-
-        console.log("outside loop");
       }, 500);
-        console.log("outside of set interval situation");
   }
 
   stopButtonMethod() {
@@ -343,7 +337,8 @@ class Game {
   }
 
   resetButtonMethod() {
-
+    this.currentGrid.reset();
+    this.renderGridToCanvas();
   }
 
   stepGeneration() {
@@ -422,8 +417,8 @@ document.addEventListener("DOMContentLoaded", function(){
 /***/ (function(module, exports, __webpack_require__) {
 
 const Cell = __webpack_require__(/*! ./cell.js */ "./cell.js");
+const templates = __webpack_require__(/*! ./templates.js */ "./templates.js");
 // import Cell from "./cell";
-
 
 class Grid {
   constructor(a=80, b=40 ) {
@@ -432,9 +427,11 @@ class Grid {
     this.provideArray = this.provideArray.bind(this);
     this.nextGenGrid = this.nextGenGrid.bind(this);
     this.testInitialPopulate = this.testInitialPopulate.bind(this);
+
+    // this.templates = templates;
   }
 
-  create_grid(a,b) {
+  create_grid(a,b, template) {
     let output_grid = [];
     for (var i = 0; i < a; i++) {
       let new_row = [];
@@ -447,8 +444,17 @@ class Grid {
     }
     // output_grid[10][5].populateCell();
     // output_grid[12][5].populateCell();
+    // template();
+    templates.blankReset();
+
     return output_grid;
   }
+
+  reset() {
+    // debugger;
+    this.grid = this.create_grid(80, 40, templates.blankReset);
+  }
+
 
   testInitialPopulate() {
   // TEST NO 1 *******
@@ -567,6 +573,41 @@ class Grid {
 }
 
 module.exports = Grid
+
+
+/***/ }),
+
+/***/ "./templates.js":
+/*!**********************!*\
+  !*** ./templates.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const templates = {
+
+  blankReset: () => {
+    return null;
+  },
+
+  patternOne: () => {
+    this.grid[18][12].populated = true;
+    this.grid[16][13].populated = true;
+    this.grid[18][13].populated = true;
+    this.grid[19][13].populated = true;
+    this.grid[16][14].populated = true;
+    this.grid[18][14].populated = true;
+    this.grid[16][15].populated = true;
+    this.grid[14][16].populated = true;
+    this.grid[12][17].populated = true;
+    this.grid[14][17].populated = true;
+  }
+
+
+
+};
+
+module.exports = templates;
 
 
 /***/ })

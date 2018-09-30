@@ -1,6 +1,6 @@
 const Cell = require("./cell.js");
+const templates = require("./templates.js");
 // import Cell from "./cell";
-
 
 class Grid {
   constructor(a=80, b=40 ) {
@@ -9,9 +9,11 @@ class Grid {
     this.provideArray = this.provideArray.bind(this);
     this.nextGenGrid = this.nextGenGrid.bind(this);
     this.testInitialPopulate = this.testInitialPopulate.bind(this);
+
+    // this.templates = templates;
   }
 
-  create_grid(a,b) {
+  create_grid(a,b, template) {
     let output_grid = [];
     for (var i = 0; i < a; i++) {
       let new_row = [];
@@ -24,8 +26,17 @@ class Grid {
     }
     // output_grid[10][5].populateCell();
     // output_grid[12][5].populateCell();
+    // template();
+    templates.blankReset();
+
     return output_grid;
   }
+
+  reset() {
+    // debugger;
+    this.grid = this.create_grid(80, 40, templates.blankReset);
+  }
+
 
   testInitialPopulate() {
   // TEST NO 1 *******
