@@ -86,10 +86,39 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./canvas_grid.js":
-/*!************************!*\
-  !*** ./canvas_grid.js ***!
-  \************************/
+/***/ "./gol.js":
+/*!****************!*\
+  !*** ./gol.js ***!
+  \****************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Grid = __webpack_require__(/*! ./lib/grid */ "./lib/grid.js");
+const Game = __webpack_require__(/*! ./lib/game */ "./lib/game.js");
+const Cell = __webpack_require__(/*! ./lib/cell */ "./lib/cell.js");
+const CanvasGrid = __webpack_require__(/*! ./lib/canvas_grid */ "./lib/canvas_grid.js");
+
+document.addEventListener("DOMContentLoaded", function(){
+  const controlButtons = {
+    startButton: document.getElementById("start"),
+    stopButton: document.getElementById("stop"),
+    resetButton: document.getElementById("reset")
+ }
+
+  const canvasEl = document.getElementById("mycanvas");
+  let canvasInstance = new CanvasGrid(canvasEl);
+  canvasInstance.buildGrid();
+  let game = new Game(canvasInstance, controlButtons);
+  game.play();
+});
+
+
+/***/ }),
+
+/***/ "./lib/canvas_grid.js":
+/*!****************************!*\
+  !*** ./lib/canvas_grid.js ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -200,10 +229,10 @@ module.exports = CanvasGrid
 
 /***/ }),
 
-/***/ "./cell.js":
-/*!*****************!*\
-  !*** ./cell.js ***!
-  \*****************/
+/***/ "./lib/cell.js":
+/*!*********************!*\
+  !*** ./lib/cell.js ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -249,15 +278,15 @@ module.exports = Cell;
 
 /***/ }),
 
-/***/ "./game.js":
-/*!*****************!*\
-  !*** ./game.js ***!
-  \*****************/
+/***/ "./lib/game.js":
+/*!*********************!*\
+  !*** ./lib/game.js ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Grid = __webpack_require__(/*! ./grid */ "./grid.js");
-const Cell = __webpack_require__(/*! ./cell.js */ "./cell.js");
+const Grid = __webpack_require__(/*! ./grid */ "./lib/grid.js");
+const Cell = __webpack_require__(/*! ./cell.js */ "./lib/cell.js");
 
 class Game {
   constructor(canvasGrid, controlButtons) {
@@ -365,59 +394,15 @@ module.exports = Game;
 
 /***/ }),
 
-/***/ "./gol.js":
-/*!****************!*\
-  !*** ./gol.js ***!
-  \****************/
+/***/ "./lib/grid.js":
+/*!*********************!*\
+  !*** ./lib/grid.js ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Grid = __webpack_require__(/*! ./grid */ "./grid.js");
-const Game = __webpack_require__(/*! ./game */ "./game.js");
-const Cell = __webpack_require__(/*! ./cell */ "./cell.js");
-const CanvasGrid = __webpack_require__(/*! ./canvas_grid */ "./canvas_grid.js");
-
-// TODO: change all SNAKECASE to CAMELCASE !!!
-
-document.addEventListener("DOMContentLoaded", function(){
-  // grab canvas
-  // pass it to canvasGrid class
-  // pass that canvasGrid to new instance of game
-  // call play on the game
-
-
-  // grab buttons
-  // pass buttons to game class
-
-  const controlButtons = {
-    startButton: document.getElementById("start"),
-    stopButton: document.getElementById("stop"),
-    resetButton: document.getElementById("reset")
- }
-
-  const canvasEl = document.getElementById("mycanvas");
-  let canvasInstance = new CanvasGrid(canvasEl);
-  canvasInstance.buildGrid();
-  let game = new Game(canvasInstance, controlButtons);
-  game.play();
-  // debugger
-  // let hi = "hi";
-
-
-});
-
-
-/***/ }),
-
-/***/ "./grid.js":
-/*!*****************!*\
-  !*** ./grid.js ***!
-  \*****************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-const Cell = __webpack_require__(/*! ./cell.js */ "./cell.js");
-const templates = __webpack_require__(/*! ./templates.js */ "./templates.js");
+const Cell = __webpack_require__(/*! ./cell.js */ "./lib/cell.js");
+const templates = __webpack_require__(/*! ./templates.js */ "./lib/templates.js");
 // import Cell from "./cell";
 
 class Grid {
@@ -577,10 +562,10 @@ module.exports = Grid
 
 /***/ }),
 
-/***/ "./templates.js":
-/*!**********************!*\
-  !*** ./templates.js ***!
-  \**********************/
+/***/ "./lib/templates.js":
+/*!**************************!*\
+  !*** ./lib/templates.js ***!
+  \**************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 

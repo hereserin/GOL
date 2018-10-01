@@ -84,3 +84,19 @@ button {
   background-color: #0c5d56b3;
   height: 300px;
 }
+
+.footer ul {
+  color: #17f0d4;
+  display: flex;
+  font-size: 45px;
+  justify-content: center;
+  padding: 100px;
+}
+
+.footer li {
+  margin: 10px;
+}
+
+.footer a {
+  color: #17f0d4;
+}

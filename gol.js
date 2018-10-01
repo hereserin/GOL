@@ -1,20 +1,9 @@
-const Grid = require('./grid');
-const Game = require('./game');
-const Cell = require('./cell');
-const CanvasGrid = require('./canvas_grid');
-
-// TODO: change all SNAKECASE to CAMELCASE !!!
+const Grid = require('./lib/grid');
+const Game = require('./lib/game');
+const Cell = require('./lib/cell');
+const CanvasGrid = require('./lib/canvas_grid');
 
 document.addEventListener("DOMContentLoaded", function(){
-  // grab canvas
-  // pass it to canvasGrid class
-  // pass that canvasGrid to new instance of game
-  // call play on the game
-
-
-  // grab buttons
-  // pass buttons to game class
-
   const controlButtons = {
     startButton: document.getElementById("start"),
     stopButton: document.getElementById("stop"),
@@ -26,8 +15,4 @@ document.addEventListener("DOMContentLoaded", function(){
   canvasInstance.buildGrid();
   let game = new Game(canvasInstance, controlButtons);
   game.play();
-  // debugger
-  // let hi = "hi";
-
-
 });
