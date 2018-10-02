@@ -362,8 +362,8 @@ class Game {
     // };
     const templateChooser = {
       template1: "pulsar",
-      template2: "pulsar",
-      template3: "pulsar",
+      template2: "glider",
+      template3: "pentadecathlon",
       template4: "pulsar",
       template5: "pulsar",
       template6: "pulsar"
@@ -389,7 +389,7 @@ class Game {
         j++;
 
 
-        if ( j > 5 ) {
+        if ( j > 2 ) {
           clearInterval(gameInt);
 
         }
@@ -511,7 +511,7 @@ class Grid {
     // debugger;
     this.grid = this.create_grid(80, 40, templates.blankReset);
     // this.populateACell([4,7]);
-    this.renderTemplate('pulsar');
+    this.renderTemplate('blankReset');
   }
 
   useTemplate(templateName) {
@@ -719,6 +719,90 @@ const templates = {
     [26, 23],
 
   ],
+
+  'glider': [
+    [6, 8],
+    [7, 8],
+    [8, 7],
+    [8, 8],
+    [7, 6],
+  ],
+
+  'pentadecathlon': [
+
+    [38, 17],
+    [38, 19],
+
+    [36, 18],
+    [37, 18],
+    [39, 18],
+    [40, 18],
+    [41, 18],
+    [42, 18],
+    [44, 18],
+    [45, 18],
+
+    [43, 17],
+    [43, 19],
+
+  ],
+
+
+  // 'Gosper glider gun': [
+  // NOT READY TO USE
+  // THIS HITS THE EDGES AND DOESNT WORK
+  //   [2, 10],
+  //   [2, 11],
+  //
+  //   [3, 10],
+  //   [3, 11],
+  //
+  //   [12, 10],
+  //   [12, 11],
+  //   [12, 12],
+  //
+  //   [13, 9],
+  //   [13, 13],
+  //
+  //   [14, 8],
+  //   [14, 14],
+  //
+  //   [15, 8],
+  //   [15, 14],
+  //
+  //   [16, 11],
+  //
+  //   [17, 9],
+  //   [17, 13],
+  //
+  //   [18, 10],
+  //   [18, 11],
+  //   [18, 12],
+  //
+  //   [19, 11],
+  //
+  //   [22, 8],
+  //   [22, 9],
+  //   [22, 10],
+  //
+  //   [23, 8],
+  //   [23, 9],
+  //   [23, 10],
+  //
+  //   [24, 7],
+  //   [24, 11],
+  //
+  //   [26, 6],
+  //   [26, 7],
+  //   [26, 11],
+  //   [26, 12],
+  //
+  //   [36, 11],
+  //   [36, 12],
+  //
+  //   [37, 11],
+  //   [37, 12],
+  // ]
 
   // somePattern: [
     // [26, 15],
