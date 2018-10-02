@@ -105,10 +105,19 @@ document.addEventListener("DOMContentLoaded", function(){
     resetButton: document.getElementById("reset")
  }
 
+  const templateImages = {
+    template1: document.getElementById("template1"),
+    template2: document.getElementById("template2"),
+    template3: document.getElementById("template3"),
+    template4: document.getElementById("template4"),
+    template5: document.getElementById("template5"),
+    template6: document.getElementById("template6")
+  }
+
   const canvasEl = document.getElementById("mycanvas");
   let canvasInstance = new CanvasGrid(canvasEl);
   canvasInstance.buildGrid();
-  let game = new Game(canvasInstance, controlButtons);
+  let game = new Game(canvasInstance, controlButtons, templateImages);
   game.play();
 });
 
@@ -289,7 +298,7 @@ const Grid = __webpack_require__(/*! ./grid */ "./lib/grid.js");
 const Cell = __webpack_require__(/*! ./cell.js */ "./lib/cell.js");
 
 class Game {
-  constructor(canvasGrid, controlButtons) {
+  constructor(canvasGrid, controlButtons, templateImages) {
     // debugger
     this.currentGrid = new Grid();
 
@@ -299,8 +308,14 @@ class Game {
     this.controlButtons = controlButtons;
     this.stop = true;
     this.setupButtons();
+
+
     this.canvasGrid = canvasGrid;
     this.canvasGrid.attachToGame(this);
+
+    this.templateImages = templateImages;
+    // this.stop = true;
+    this.setupTemplateIcons();
 
     // this.canvasGrid.game = this;
     this.stepGeneration = this.stepGeneration.bind(this);
@@ -313,6 +328,14 @@ class Game {
     });
   }
 
+  setupTemplateIcons() {
+    // Object.entries(this.templateImages);
+    // debugger
+    Object.entries(this.templateImages).forEach((iconArr) => {
+      return this.attachTemplateIconsToMethod(iconArr);
+    });
+  }
+
   attachButtonToMethod(butnArr) {
     const that = this;
     const methodChooser = {
@@ -320,9 +343,37 @@ class Game {
       stopButton: that.stopButtonMethod,
       resetButton: that.resetButtonMethod
     };
-
+    // debugger
     butnArr[1].addEventListener('click', (e) => {
       return methodChooser[butnArr[0]].apply(that);
+    });
+  }
+
+  attachTemplateIconsToMethod(iconArr) {
+    const that = this;
+
+    // const methodChooser = {
+    //   template1: that.templateButtonMethod("pulsar"),
+    //   template2: that.templateButtonMethod("pulsar"),
+    //   template3: that.templateButtonMethod("pulsar"),
+    //   template4: that.templateButtonMethod("pulsar"),
+    //   template5: that.templateButtonMethod("pulsar"),
+    //   template6: that.templateButtonMethod("pulsar")
+    // };
+    const templateChooser = {
+      template1: "pulsar",
+      template2: "pulsar",
+      template3: "pulsar",
+      template4: "pulsar",
+      template5: "pulsar",
+      template6: "pulsar"
+    };
+
+
+    iconArr[1].addEventListener('click', (e) => {
+      console.log(iconArr[1]);
+      // debugger
+      return that.templateButtonMethod(templateChooser[iconArr[0]]);
     });
   }
 
@@ -337,15 +388,15 @@ class Game {
         this.renderGridToCanvas();
         j++;
 
-        console.log("before loop");
+
         if ( j > 5 ) {
           clearInterval(gameInt);
-          console.log("inside loop")
+
         }
 
-        console.log("outside loop");
+
       }, 500);
-        console.log("outside of set interval situation");
+
   }
 
   startButtonMethod() {
@@ -370,6 +421,12 @@ class Game {
     this.renderGridToCanvas();
   }
 
+  templateButtonMethod(templateName) {
+    this.currentGrid.useTemplate(templateName);
+
+    this.renderGridToCanvas();
+  }
+
   stepGeneration() {
     this.nextGenGrid = this.currentGrid.nextGenGrid();
     this.currentGrid = this.nextGenGrid;
@@ -378,6 +435,7 @@ class Game {
 
 
   renderGridToCanvas() {
+
     this.canvasGrid.acceptArray(this.currentGrid.provideArray());
   }
 
@@ -437,7 +495,7 @@ class Grid {
   }
 
   populateACell(coords) {
-    console.log(this);
+
     this.grid[coords[0]][coords[1]].populated = true;
   }
 
@@ -454,6 +512,13 @@ class Grid {
     this.grid = this.create_grid(80, 40, templates.blankReset);
     // this.populateACell([4,7]);
     this.renderTemplate('pulsar');
+  }
+
+  useTemplate(templateName) {
+    // debugger;
+    this.grid = this.create_grid(80, 40, templates.blankReset);
+    // this.populateACell([4,7]);
+    this.renderTemplate(templateName);
   }
 
 
@@ -548,11 +613,9 @@ class Grid {
   }
 
   numberOfPopulatedNeighbors(cell) {
-    // console.log(cell.coordinates)
-    // debugger
+
     return cell.neighbors().reduce((acc, neighbor) => {
-      // debugger
-      // console.log(neighbor);
+
       if (this.coordsAreInGrid(neighbor) && this.grid[neighbor[0]][neighbor[1]].populated) {
         return acc + 1;
       } else {
@@ -587,20 +650,7 @@ module.exports = Grid
 
 const templates = {
 
-  blankReset: [],
-
-  // patternOne: [
-  //   [[18][12]],
-  //   [[16][13]],
-  // [  [18][13]],
-  //   [[19][13]],
-  //   [[16][14]],
-  // [  [18][14]],
-  //   [[16][15]],
-  //   [[14][16]],
-  //   [[12][17]],
-  //   [[14][17]]
-  // ],
+  'blankReset': [],
 
   'test': [
     [13, 15],
@@ -610,7 +660,6 @@ const templates = {
   ],
 
   'pulsar': [
-    // console.log(`this from pulsar template: ${this}`);
     [13, 15],
     [13, 16],
     [13, 17],
@@ -669,117 +718,20 @@ const templates = {
     [26, 22],
     [26, 23],
 
-  ]
+  ],
 
-  // somePattern: () => {
-  //   this.grid[][].populated = true;
-  //   this.grid[][].populated = true;
-  //   this.grid[][].populated = true;
-  //   this.grid[][].populated = true;
-  //   this.grid[][].populated = true;
-  //   this.grid[][].populated = true;
-  // }
+  // somePattern: [
+    // [26, 15],
+    // [26, 16],
+    // [26, 17],
+    // [26, 21],
+    // [26, 22],
+    // [26, 23],
+  // ]
 
 
 };
 
-//**************ORIGINAL TEMPLATE OBJECT******************
-
-//
-// module.exports = templates;
-// const templates = {
-//
-//   blankReset: () => {
-//     return null;
-//   },
-//
-//   patternOne: () => {
-//     this.grid[18][12].populated = true;
-//     this.grid[16][13].populated = true;
-//     this.grid[18][13].populated = true;
-//     this.grid[19][13].populated = true;
-//     this.grid[16][14].populated = true;
-//     this.grid[18][14].populated = true;
-//     this.grid[16][15].populated = true;
-//     this.grid[14][16].populated = true;
-//     this.grid[12][17].populated = true;
-//     this.grid[14][17].populated = true;
-//   },
-//
-//   pulsar: () => {
-//     console.log(`this from pulsar template: ${this}`);
-//     this.grid[13][15].populated = true;
-//     this.grid[13][16].populated = true;
-//     this.grid[13][17].populated = true;
-//     this.grid[13][21].populated = true;
-//     this.grid[13][22].populated = true;
-//     this.grid[13][23].populated = true;
-//
-//     this.grid[15][13].populated = true;
-//     this.grid[15][18].populated = true;
-//     this.grid[15][20].populated = true;
-//     this.grid[15][25].populated = true;
-//
-//     this.grid[16][13].populated = true;
-//     this.grid[16][18].populated = true;
-//     this.grid[16][20].populated = true;
-//     this.grid[16][25].populated = true;
-//
-//     this.grid[17][13].populated = true;
-//     this.grid[17][18].populated = true;
-//     this.grid[17][20].populated = true;
-//     this.grid[17][25].populated = true;
-//
-//     this.grid[18][15].populated = true;
-//     this.grid[18][16].populated = true;
-//     this.grid[18][17].populated = true;
-//     this.grid[18][21].populated = true;
-//     this.grid[18][22].populated = true;
-//     this.grid[18][23].populated = true;
-//
-//     this.grid[20][15].populated = true;
-//     this.grid[20][16].populated = true;
-//     this.grid[20][17].populated = true;
-//     this.grid[20][21].populated = true;
-//     this.grid[20][22].populated = true;
-//     this.grid[20][23].populated = true;
-//
-//     this.grid[22][13].populated = true;
-//     this.grid[22][18].populated = true;
-//     this.grid[22][20].populated = true;
-//     this.grid[22][25].populated = true;
-//
-//     this.grid[23][13].populated = true;
-//     this.grid[23][18].populated = true;
-//     this.grid[23][20].populated = true;
-//     this.grid[23][25].populated = true;
-//
-//     this.grid[24][13].populated = true;
-//     this.grid[24][18].populated = true;
-//     this.grid[24][20].populated = true;
-//     this.grid[24][25].populated = true;
-//
-//     this.grid[26][15].populated = true;
-//     this.grid[26][16].populated = true;
-//     this.grid[26][17].populated = true;
-//     this.grid[26][21].populated = true;
-//     this.grid[26][22].populated = true;
-//     this.grid[26][23].populated = true;
-//
-//   }
-//
-//   // somePattern: () => {
-//   //   this.grid[][].populated = true;
-//   //   this.grid[][].populated = true;
-//   //   this.grid[][].populated = true;
-//   //   this.grid[][].populated = true;
-//   //   this.grid[][].populated = true;
-//   //   this.grid[][].populated = true;
-//   // }
-//
-//
-// };
-//
 module.exports = templates;
 
 
