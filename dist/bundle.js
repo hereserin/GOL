@@ -302,7 +302,7 @@ class Game {
     // debugger
     this.currentGrid = new Grid();
 
-    this.currentGrid.testInitialPopulate();
+    // this.currentGrid.testInitialPopulate();
     this.nextGenGrid = this.currentGrid.nextGenGrid();
 
     this.controlButtons = controlButtons;
@@ -352,21 +352,13 @@ class Game {
   attachTemplateIconsToMethod(iconArr) {
     const that = this;
 
-    // const methodChooser = {
-    //   template1: that.templateButtonMethod("pulsar"),
-    //   template2: that.templateButtonMethod("pulsar"),
-    //   template3: that.templateButtonMethod("pulsar"),
-    //   template4: that.templateButtonMethod("pulsar"),
-    //   template5: that.templateButtonMethod("pulsar"),
-    //   template6: that.templateButtonMethod("pulsar")
-    // };
     const templateChooser = {
       template1: "pulsar",
       template2: "glider",
       template3: "pentadecathlon",
-      template4: "pulsar",
-      template5: "pulsar",
-      template6: "pulsar"
+      template4: "another1",
+      template5: "another2",
+      template6: "another3"
     };
 
 
@@ -389,7 +381,7 @@ class Game {
         j++;
 
 
-        if ( j > 2 ) {
+        if ( j > 0 ) {
           clearInterval(gameInt);
 
         }
@@ -746,6 +738,87 @@ const templates = {
     [43, 19],
 
   ],
+
+  'another1': [
+    [18, 12],
+
+    [16, 13],
+    [18, 13],
+    [19, 13],
+
+    [16, 14],
+    [18, 14],
+
+    [16, 15],
+
+    [14, 16],
+
+    [12, 17],
+    [14, 17]
+  ],
+
+  'another2': [
+
+    [23, 18],
+    [24, 18],
+    [25, 18],
+    [26, 18],
+    [27, 18],
+    [28, 18],
+    [29, 18],
+    [30, 18],
+
+    [32, 18],
+    [33, 18],
+    [34, 18],
+    [35, 18],
+    [36, 18],
+
+    [40, 18],
+    [41, 18],
+    [42, 18],
+
+    [49, 18],
+    [50, 18],
+    [51, 18],
+    [52, 18],
+    [53, 18],
+    [54, 18],
+    [55, 18],
+
+    [57, 18],
+    [58, 18],
+    [59, 18],
+    [60, 18],
+    [61, 18],
+
+
+  ],
+
+
+  'another3': [
+
+    [15, 18],
+    [16, 18],
+    [17, 18],
+    [19, 18],
+
+    [15, 19],
+
+    [18, 20],
+    [19, 20],
+
+    [16, 21],
+    [17, 21],
+    [19, 21],
+
+    [15, 22],
+    [17, 22],
+    [19, 22],
+
+
+
+  ]
 
 
   // 'Gosper glider gun': [
