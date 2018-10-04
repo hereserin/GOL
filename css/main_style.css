@@ -150,12 +150,30 @@ button:hover {
 
 .modal-box {
   position: absolute;
-  background: white;
-  height: 400px;
-  width: 600px;
+  background: #bdeae5;
+  color: #2e3453;
+  height: 500px;
+  width: 1200px;
   left: 50%;
   transform: translateX(-50%);
   top: 150px;
+  border-radius: 10px;
+  padding: 60px;
+  z-index: 5;
+  font-size: 28px;
+  font-family: 'Niramit', sans-serif;
+
+}
+
+.game-rules-list li {
+    list-style: none;
+    margin-left: 35px;
+    /* margin: 20px; */
+}
+
+
+.game-rules h3 {
+  font-size: 40px
 }
 
 .modal {
