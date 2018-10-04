@@ -2,12 +2,16 @@
   <head>
     <title>Game of Life</title>
     <!-- <script type="application/javascript" src="cell.js"></script>
-    <script type="application/javascript" src="grid.js"></script>
+    <!-- <script type="application/javascript" src="grid.js"></script>
     <script type="application/javascript" src="random.js"></script> -->
+    <!-- <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />  -->
+    <link rel="icon" type="image/png" href="images/favicon.ico">
     <link rel="stylesheet" href="./css/main_style.css" type="text/css"/>
     <script type="application/javascript" src="dist/bundle.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
   </head>
 
   <body>
@@ -16,7 +20,11 @@
       <header class="top-part">
         <h1>Conway's Game of Life</h1>
       </header>
-
+      <ul>
+        <li>
+          <button class="js-modal-open">**modal**</button>
+        </li>
+      </ul>
       <div class="control-panel">
         <ul>
           <li>
@@ -29,6 +37,7 @@
             <button id="reset">Reset</button>
           </li>
         </ul>
+
       </div>
 
       <ul class='middle-area'>
@@ -103,6 +112,33 @@
       </footer>
 
     </main>
+
+    <section class='modal is-open'>
+      <div class="modal-screen js-modal-close">
+
+      </div>
+
+      <div class="modal-box">
+
+      </div>
+    </section>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
+
+    <script>
+    $(function(){
+      $("body").on("click", ".js-modal-open", function(event){
+        event.preventDefault();
+        $(".modal").addClass("is-open");
+      });
+
+      $("body").on("click", ".js-modal-close", function(event){
+        event.preventDefault();
+        $(".modal").removeClass("is-open");
+      });
+
+    });
+    </script>
   </body>
 
 </html>

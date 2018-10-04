@@ -33,6 +33,10 @@ button {
   color: #37233a;
 }
 
+button:hover {
+  background-color: #dcf7f1;
+}
+
 
 .main-area {
   background-color: #37233a;
@@ -84,6 +88,7 @@ button {
 .below-board {
   background-color: #0c5d56;
   height: 300px;
+  color: #0c5d56;
 }
 
 .bottom-menu {
@@ -91,7 +96,7 @@ button {
   box-shadow: 3px 3px 10px #070707;
   height: 200px;
   margin: 50px;
-  height: 150px;
+  height: 170px;
 }
 
 .bottom-menu ul {
@@ -125,14 +130,86 @@ button {
   filter: opacity(1);
 }
 
-/* .bottom-menu button {
-  background-color: blue;
-  border-color: red;
-  color: #37233a;
-  border-radius: 50%;
+.modal {
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-box {
+  position: absolute;
+  background: white;
+  height: 400px;
+  width: 600px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 150px;
+}
+
+.modal {
+  display: none;
+}
+
+.is-open {
+  display: block;
+}
+
+/* .modal-screen {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.modal-form {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  margin-left: -220px;
+  width: 360px;
   padding: 20px;
-  padding-left: 25px;
-  padding-right: 25px;
+  background: #fff;
+  z-index: 3;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #f00;
+}
+
+.modal-form > h1 {
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.modal-form > p {
+  margin: 0 0 20px 0;
 } */
 
 .footer {
@@ -154,4 +231,8 @@ button {
 
 .footer a {
   color: #17f0d4;
+}
+
+.footer a:hover {
+  color: #dcf7f1;
 }
