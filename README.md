@@ -20,6 +20,3 @@ In The Game of Life, a cell can be in one of two states: alive or dead. Whether 
 This game simulates the growth and decline of life, and its initial state determines all following states of the board, making it a 0-player game. The rules listed above set into motion a compelling model of natural processes. In the _Game of Life_, patterns emerge from seeming chaos and often disolve away again by their own self-resolve. 
 
 
-## ToDos: 
-I plan to add a menu with interesting initial templates, in particular: a pulsar and a Gosper glider gun. 
-Another feature I would like to implement is a means to control the speed of the simulation. 
