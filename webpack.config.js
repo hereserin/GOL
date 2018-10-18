@@ -1,8 +1,24 @@
-
 module.exports = {
   entry: "./lib/gol.js",
   output: {
-  	filename: "./bundle.js"
+    filename: "./bundle.js"
   },
-  devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: [/\.jsx?$/],
+        exclude: /(node_modules)/,
+        use: {
+          loader: "babel-loader",
+          query: {
+            presets: ["@babel/env", "@babel/react"]
+          }
+        }
+      }
+    ]
+  },
+  devtool: "source-map",
+  resolve: {
+    extensions: [".js", ".jsx", "*"]
+  }
 };
