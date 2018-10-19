@@ -83,6 +83,29 @@ button:hover {
   width: 500px;
 }
 
+.asides ul {
+  color: #17f0d4;
+  font-size: 45px;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 50%;
+  margin-bottom: 50%;
+}
+
+.asides li {
+  margin: 10px;
+  justify-content: center;
+}
+
+.asides a {
+  margin-left: 40px;
+  color: #17f0d4;
+}
+
+.asides a:hover {
+  color: #dcf7f1;
+}
+
 .canvas-grid {
   margin: 20px;
 }
@@ -205,25 +228,5 @@ button:hover {
 
 .footer {
   background-color: #0c5d56b3;
-  height: 300px;
-}
-
-.footer ul {
-  color: #17f0d4;
-  display: flex;
-  font-size: 45px;
-  justify-content: center;
-  padding: 100px;
-}
-
-.footer li {
-  margin: 10px;
-}
-
-.footer a {
-  color: #17f0d4;
-}
-
-.footer a:hover {
-  color: #dcf7f1;
+  height: 200px;
 }
