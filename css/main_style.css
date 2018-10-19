@@ -107,6 +107,7 @@ button:hover {
 .below-board {
   background-color: #0c5d56;
   height: 300px;
+  padding-top: 30px;
   color: #0c5d56;
 }
 

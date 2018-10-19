@@ -147,10 +147,7 @@ function () {
     this.game = undefined;
     this.ctx = this.canvasEl.getContext("2d");
     this.respondToClick = this.respondToClick.bind(this);
-    this.canvasEl.addEventListener('click', this.respondToClick);
-    this.fillSquare = this.fillSquare.bind(this);
-    this.birthCell = this.birthCell.bind(this);
-    this.killCell = this.killCell.bind(this);
+    this.canvasEl.addEventListener("click", this.respondToClick);
     this.dimenInBoxes = undefined;
     this.game = undefined;
   }
@@ -164,8 +161,7 @@ function () {
     key: "buildGrid",
     value: function buildGrid() {
       this.canvasEl.width = 800;
-      this.canvasEl.height = 400; // const ctx = this.canvasEl.getContext("2d");
-
+      this.canvasEl.height = 400;
       this.ctx.fillStyle = "#37233a";
       this.ctx.fillRect(0, 0, 800, 400);
       var cols;
@@ -208,21 +204,21 @@ function () {
   }, {
     key: "birthCell",
     value: function birthCell(coords) {
-      this.fillSquare(coords, 'yellow');
+      this.fillSquare(coords, "yellow");
     }
   }, {
     key: "killCell",
     value: function killCell(coords) {
-      this.fillSquare(coords, 'black');
+      this.fillSquare(coords, "black");
     }
   }, {
     key: "convertCoords",
     value: function convertCoords(coords) {
       var x = coords[0];
       var y = coords[1];
-      var x_loc = 1 + x * 10;
-      var y_loc = 1 + y * 10;
-      return [x_loc, y_loc];
+      var xLoc = 1 + x * 10;
+      var yLoc = 1 + y * 10;
+      return [xLoc, yLoc];
     }
   }, {
     key: "respondToClick",
@@ -234,8 +230,7 @@ function () {
       };
       var a = Math.floor(clickLocation.x / 10);
       var b = Math.floor(clickLocation.y / 10);
-      var boxCoord = [a, b]; // this.birthCell(boxCoord);
-
+      var boxCoord = [a, b];
       this.toggleOnClick(boxCoord);
     }
   }, {
@@ -322,21 +317,14 @@ function () {
   function Game(canvasGrid, controlButtons, templateImages) {
     _classCallCheck(this, Game);
 
-    // debugger
-    this.currentGrid = new Grid(); // this.currentGrid.testInitialPopulate();
-
-    this.nextGenGrid = this.currentGrid.nextGenGrid();
+    this.currentGrid = new Grid();
     this.controlButtons = controlButtons;
     this.stop = true;
     this.setupButtons();
     this.canvasGrid = canvasGrid;
     this.canvasGrid.attachToGame(this);
-    this.templateImages = templateImages; // this.stop = true;
-
-    this.setupTemplateIcons(); // this.canvasGrid.game = this;
-
-    this.stepGeneration = this.stepGeneration.bind(this);
-    this.renderGridToCanvas = this.renderGridToCanvas.bind(this);
+    this.templateImages = templateImages;
+    this.setupTemplateIcons();
   }
 
   _createClass(Game, [{
@@ -353,8 +341,6 @@ function () {
     value: function setupTemplateIcons() {
       var _this2 = this;
 
-      // Object.entries(this.templateImages);
-      // debugger
       Object.entries(this.templateImages).forEach(function (iconArr) {
         _this2.attachTemplateIconsToMethod(iconArr);
       });
@@ -367,8 +353,7 @@ function () {
         startButton: that.startButtonMethod,
         stopButton: that.stopButtonMethod,
         resetButton: that.resetButtonMethod
-      }; // debugger
-
+      };
       butnArr[1].addEventListener("click", function (e) {
         methodChooser[butnArr[0]].apply(that);
       });
@@ -395,7 +380,6 @@ function () {
     value: function play() {
       var _this3 = this;
 
-      // debugger
       this.renderGridToCanvas();
       var j = 0;
       var gameInt = setInterval(function () {
@@ -484,8 +468,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var Cell = __webpack_require__(/*! ./cell.js */ "./lib/cell.js");
 
-var templates = __webpack_require__(/*! ./templates.js */ "./lib/templates.js"); // import Cell from "./cell";
-
+var templates = __webpack_require__(/*! ./templates.js */ "./lib/templates.js");
 
 var Grid =
 /*#__PURE__*/
@@ -496,32 +479,26 @@ function () {
 
     _classCallCheck(this, Grid);
 
-    this.populateACell = this.populateACell.bind(this);
-    this.grid = this.create_grid(a, b);
-    this.acceptArray = this.acceptArray.bind(this);
-    this.provideArray = this.provideArray.bind(this);
-    this.nextGenGrid = this.nextGenGrid.bind(this);
-    this.testInitialPopulate = this.testInitialPopulate.bind(this); // this.templates = templates;
+    this.grid = this.createGrid(a, b);
   }
 
   _createClass(Grid, [{
-    key: "create_grid",
-    value: function create_grid(a, b, template) {
-      var output_grid = [];
+    key: "createGrid",
+    value: function createGrid(a, b, template) {
+      var outputGrid = [];
 
       for (var i = 0; i < a; i++) {
-        var new_row = [];
+        var newRow = [];
 
         for (var j = 0; j < b; j++) {
-          var new_cell = new Cell(i, j, this.shouldBePopulated(i, j));
-          new_row.push(new_cell);
+          var newCell = new Cell(i, j, this.shouldBePopulated(i, j));
+          newRow.push(newCell);
         }
 
-        output_grid.push(new_row);
-      } // templates.blankReset();
+        outputGrid.push(newRow);
+      }
 
-
-      return output_grid;
+      return outputGrid;
     }
   }, {
     key: "populateACell",
@@ -533,7 +510,6 @@ function () {
     value: function renderTemplate(template) {
       var _this = this;
 
-      // this.reset();
       var chosenTemplate = templates[template];
       chosenTemplate.forEach(function (setOfCoords) {
         return _this.populateACell(setOfCoords);
@@ -542,38 +518,18 @@ function () {
   }, {
     key: "reset",
     value: function reset() {
-      // debugger;
-      this.grid = this.create_grid(80, 40, templates.blankReset); // this.populateACell([4,7]);
-
-      this.renderTemplate('blankReset');
+      this.grid = this.createGrid(80, 40, templates.blankReset);
+      this.renderTemplate("blankReset");
     }
   }, {
     key: "useTemplate",
     value: function useTemplate(templateName) {
-      // debugger;
-      this.grid = this.create_grid(80, 40, templates.blankReset); // this.populateACell([4,7]);
-
+      this.grid = this.createGrid(80, 40, templates.blankReset);
       this.renderTemplate(templateName);
     }
   }, {
     key: "testInitialPopulate",
     value: function testInitialPopulate() {
-      // TEST NO 1 *******
-      // this.grid[10][5].populated = true;
-      // this.grid[12][5].populated = true;
-      // this.grid[11][4].populated = true;
-      // this.grid[12][3].populated = true;
-      //
-      // this.grid[2][3].populated = true;
-      // this.grid[4][3].populated = true;
-      // this.grid[3][2].populated = true;
-      // this.grid[4][1].populated = true;
-      //
-      // this.grid[20][5].populated = true;
-      // this.grid[21][5].populated = true;
-      // this.grid[22][5].populated = true;
-      // ******
-      // TEST NO 2 - USE THIS AS A FINAL TEMPLATE *******
       this.grid[18][12].populated = true;
       this.grid[16][13].populated = true;
       this.grid[18][13].populated = true;
@@ -583,7 +539,7 @@ function () {
       this.grid[16][15].populated = true;
       this.grid[14][16].populated = true;
       this.grid[12][17].populated = true;
-      this.grid[14][17].populated = true; // *******
+      this.grid[14][17].populated = true;
     }
   }, {
     key: "shouldBePopulated",
@@ -618,21 +574,19 @@ function () {
     value: function nextGenGrid() {
       var _this2 = this;
 
-      var next_gen_grid = new this.constructor(this.grid.length, this.grid[0].length);
-      var next_gen_arr = this.grid.map(function (row) {
-        return row.map(function (each_cell) {
-          // debugger
-          var populate = _this2.cellIsPopulatedInNextGeneration(each_cell);
+      var nextGenGrid = new this.constructor(this.grid.length, this.grid[0].length);
+      var nextGenArr = this.grid.map(function (row) {
+        return row.map(function (eachCell) {
+          var populate = _this2.cellIsPopulatedInNextGeneration(eachCell);
 
-          var coords = each_cell.coordinates;
-          var next_gen = new Cell(coords[0], coords[1], populate);
-          return next_gen;
+          var coords = eachCell.coordinates;
+          var nextGen = new Cell(coords[0], coords[1], populate);
+          return nextGen;
         });
       });
-      next_gen_grid.acceptArray(next_gen_arr);
-      return next_gen_grid;
-    } // *****
-
+      nextGenGrid.acceptArray(nextGenArr);
+      return nextGenGrid;
+    }
   }, {
     key: "cellIsPopulatedInNextGeneration",
     value: function cellIsPopulatedInNextGeneration(cell) {
@@ -669,8 +623,7 @@ function () {
       }
 
       return false;
-    } // ******
-
+    }
   }]);
 
   return Grid;
